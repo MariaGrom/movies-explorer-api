@@ -19,7 +19,7 @@ app.set('config', config);
 
 mongoose.set({ runValidators: true });
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb'); // подключаемся к базе данных
+mongoose.connect('mongodb://localhost:27017/moviesdb'); // подключаемся к базе данных
 
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
