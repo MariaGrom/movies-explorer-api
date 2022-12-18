@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { updateUserProfile, findCurrentUser } from '../controllers/users.js'
-import { userProfileValidator } from '../validators/validators.js';
+import { updateUserProfile, findCurrentUser } from '../controllers/users.js';
+import { userProfileValidator } from '../validators/users.js';
 
 export const userRoutes = Router();
 

@@ -1,38 +1,32 @@
 import mongoose from 'mongoose';
-
-export const urlLink = /^https?:\/\/(www\.)?[a-zA-Z\0-9]+\.[\w\-._~:/?#[\]@!$&'()*+,;=]{2,}#?$/;
+import { urlLink } from '../utils/constants.js';
 
 // Создаем модель фильма
 const movieSchema = new mongoose.Schema({
-  country:{
+  country: {
+    type: String,
+    required: true,
+    minlength: 2,
+  },
+  director: {
     type: String,
     required: true,
   },
-  director:{
-    type: String,
-    required: true,
-  },
-  duration:{
+  duration: {
     type: Number,
     required: true,
   },
-  year:{
+  year: {
     type: String,
     required: true,
   },
-  description:{
+  description: {
     type: String,
     required: true,
+    minlength: 2,
+    maxlength: 300,
   },
-  image:{
-    type: String,
-    required: true,
-    validate: {
-      validator: (link) => urlLink.test(link),
-      message: () => 'Требуется http(s) ссылка',
-    },
-  },
-  trailerLink:{
+  image: {
     type: String,
     required: true,
     validate: {
@@ -40,7 +34,7 @@ const movieSchema = new mongoose.Schema({
       message: () => 'Требуется http(s) ссылка',
     },
   },
-  thumbnail:{
+  trailer: {
     type: String,
     required: true,
     validate: {
@@ -48,25 +42,34 @@ const movieSchema = new mongoose.Schema({
       message: () => 'Требуется http(s) ссылка',
     },
   },
-  owner:{
+  thumbnail: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (link) => urlLink.test(link),
+      message: () => 'Требуется http(s) ссылка',
+    },
+  },
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'user',
   },
-  movieId:{
-    // уточнить какой тип данных должен быть
+  movieId: {
     type: String,
     required: true,
   },
-  nameRU:{
+  nameRU: {
     type: String,
     required: true,
+    minlength: 1,
   },
-  nameEN:{
+  nameEN: {
     type: String,
     required: true,
-  }
-})
+    minlength: 1,
+  },
+}, { versionKey: false });
 
 // Создаем модель Фильма
 export const Movie = mongoose.model('movie', movieSchema);

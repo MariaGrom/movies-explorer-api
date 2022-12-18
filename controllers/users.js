@@ -7,7 +7,6 @@ import { UnauthorizedError } from '../errors/UnauthorizedError.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
 import { ConflictError } from '../errors/ConflictError.js';
 
-
 // Создаем контроллер POST-запроса для создания нового пользователя с хешированием пароля
 export const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -76,7 +75,7 @@ export const updateUserProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name }, { new: true })
     .then((user) => {
       if (user) {
-        res.send(user);
+        res.send({ data: user });
       } else {
         next(new NotFoundError('Пользователь не найден'));
       }

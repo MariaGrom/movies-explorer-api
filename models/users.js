@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    default: 'Новый пользователь',
     minlength: 2,
     maxlength: 30,
   },
@@ -26,7 +25,6 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 }, { versionKey: false });
-
 
 // Проверяем пользователя - есть в база или нет по почте и паролю
 userSchema.statics.findUserByCredentials = function (email, password) {

@@ -1,12 +1,4 @@
 import { Joi, celebrate } from 'celebrate';
-import { urlLink } from '../models/movies.js';
-
-// Валидация пользователя
-// export const userIdValidator = celebrate({
-//   params: Joi.object({
-//     userId: Joi.string().hex().length(24).required(),
-//   }).required(),
-// });
 
 export const userBodyValidator = celebrate({
   body: Joi.object().keys({
