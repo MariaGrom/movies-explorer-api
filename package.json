@@ -39,7 +39,6 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
-    "path": "^0.12.7",
     "validator": "^13.7.0",
     "winston": "^3.8.2"
   }
