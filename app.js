@@ -3,7 +3,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import helmet from 'helmet';
 import { errors } from 'celebrate';
 import { router } from './routes/index.js';
 import { requestLogger, errorLogger } from './middlewares/logger.js';
