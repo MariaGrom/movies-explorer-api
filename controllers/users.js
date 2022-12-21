@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/users.js';
 import { BadRequestError } from '../errors/BadRequestError.js';
 import { InternalServerError } from '../errors/InternalServerError.js';
-import { UnauthorizedError } from '../errors/UnauthorizedError.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
 import { ConflictError } from '../errors/ConflictError.js';
 
@@ -45,9 +44,7 @@ export const login = (req, res, next) => {
       );
       res.send({ token });
     })
-    .catch(() => {
-      next(new UnauthorizedError('Неверный логин или пароль'));
-    });
+    .catch(next);
 };
 
 // Создаем контроллер GET-запроса о текущем пользователе
@@ -71,8 +68,8 @@ export const findCurrentUser = (req, res, next) => {
 
 // Создаем контроллер PATCH-запроса по обновлению профиля
 export const updateUserProfile = (req, res, next) => {
-  const { name } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name }, { new: true })
+  const { name, email } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true })
     .then((user) => {
       if (user) {
         res.send({ data: user });
@@ -81,7 +78,9 @@ export const updateUserProfile = (req, res, next) => {
       }
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'MongoServerError') {
+        next(new ConflictError('Пользователь с такой почтой уже существует'));
+      } else if (err.name === 'ValidationError') {
         next(new BadRequestError('Введены некорректные данные поиска'));
       } else {
         next(new InternalServerError('Произошла ошибка сервера'));

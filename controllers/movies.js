@@ -6,33 +6,7 @@ import { ForbiddenError } from '../errors/ForbiddenError.js';
 
 // Создаем контроллер POST-запроса для создания нового фильма
 export const createMovie = (req, res, next) => {
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-  } = req.body;
-  Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailer,
-    nameRU,
-    nameEN,
-    thumbnail,
-    movieId,
-    owner: req.user._id,
-  })
+  Movie.create({ ...req.body, owner: req.user._id })
     .then((newMovie) => res.send(newMovie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -58,13 +32,15 @@ export const deleteMovie = (req, res, next) => {
   Movie.findById(req.params._id)
     .then((movie) => {
       if (!movie) {
-        next(new NotFoundError('Карточка не найдена'));
+        throw new NotFoundError('Карточка не найдена');
       } else if (movie.owner.toString() !== req.user._id) {
-        next(new ForbiddenError('Доступ запрещен'));
+        throw new ForbiddenError('Доступ запрещен');
       } else {
-        movie.remove();
-        res.send(movie);
+        return movie.remove();
       }
+    })
+    .then((movie) => {
+      res.send(movie);
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
