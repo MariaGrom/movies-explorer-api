@@ -9,11 +9,11 @@ export const movieIdValidator = celebrate({
 
 export const movieBodyValidator = celebrate({
   body: Joi.object().keys({
-    country: Joi.string().min(2).required(),
+    country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
     year: Joi.string().required(),
-    description: Joi.string().min(2).max(300).required(),
+    description: Joi.string().required(),
     image: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
     trailer: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
     thumbnail: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
