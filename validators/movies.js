@@ -1,5 +1,5 @@
 import { Joi, celebrate } from 'celebrate';
-import { ruName, enName, urlLink } from '../utils/constants.js';
+import { urlLink } from '../utils/constants.js';
 
 export const movieIdValidator = celebrate({
   params: Joi.object({
@@ -15,10 +15,10 @@ export const movieBodyValidator = celebrate({
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
-    trailer: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
+    trailerLink: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
     thumbnail: Joi.string().pattern(urlLink).uri({ scheme: ['http', 'https'] }).required(),
     movieId: Joi.number().required(),
-    nameRU: Joi.string().pattern(ruName).required(),
-    nameEN: Joi.string().pattern(enName).required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
