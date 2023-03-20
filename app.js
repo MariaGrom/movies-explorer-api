@@ -24,7 +24,9 @@ app.set('config', config);
 
 mongoose.set({ runValidators: true });
 mongoose.set('strictQuery', false);
-mongoose.connect(config.DB_URL); // подключаемся к базе данных
+// mongoose.connect(config.DB_URL); // подключаемся к базе данных
+mongoose.connect('mongodb://localhost:27017/mydb');
+// console.log ("!", config.DB_URL)
 
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
