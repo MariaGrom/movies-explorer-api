@@ -11,7 +11,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express();
 
-const { PORT = 3003 } = process.env;
+const { PORT = 3007 } = process.env;
 
 // Определяем какой секретный ключ выбираем при продакшене
 const config = dotenv.config({
